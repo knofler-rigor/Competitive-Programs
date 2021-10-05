@@ -1,12 +1,7 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-
 string ltrim(const string &);
 string rtrim(const string &);
-
-
-
 
 int maxPairs(vector<int> skillLevel, int minDiff) {
     int n=skillLevel.size();
@@ -46,7 +41,6 @@ int main()
 
         skillLevel[i] = skillLevel_item;
     }
-
     string minDiff_temp;
     getline(cin, minDiff_temp);
 
@@ -60,7 +54,6 @@ int main()
 
     return 0;
 }
-
 string ltrim(const string &str) {
     string s(str);
 
@@ -71,7 +64,6 @@ string ltrim(const string &str) {
 
     return s;
 }
-
 string rtrim(const string &str) {
     string s(str);
 
