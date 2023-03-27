@@ -8,7 +8,7 @@ import sys
 
 
 def avg(*nums):
-    s=0
+    s=0.00
     for i in nums:
         s=s+i
     return s/len(nums)
