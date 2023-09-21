@@ -1,52 +1,38 @@
 #include <bits/stdc++.h>
-#include <set>
+
 using namespace std;
 
 string ltrim(const string &);
 string rtrim(const string &);
 
 
-
 vector<long> getMaxArea(int w, int h, vector<bool> isVertical, vector<int> distance) {
-    multiset <int> vv,vlen;
-    multiset <int> hh,hlen;
-
-    vv.insert(0);
-    vv.insert(w);
-    vlen.insert(w);
-
-    hh.insert(0);
-    hh.insert(h);
-    hlen.insert(h);
+    set<int> vv{0, w};
+    set<int> hh{0, h};
+    multiset<int> vlen{w};
+    multiset<int> hlen{h};
 
     vector<long> res;
-    for(int i=0;i<distance.size();i++){
-        long vl=0,hl=0;
-        long d=distance[i];
-        if(isVertical[i]==1){
-            auto it=vv.upper_bound(d);
-            long curlen=*it - *prev(it);
-            
-            vlen.erase(vlen.find(curlen));
-            vlen.insert(d - *prev(it));
-            vlen.insert(*it - d);
-            vv.insert(d);
-        }else{
-            auto it=hh.upper_bound(d);
-            long curlen=*it - *prev(it);
-            
-            hlen.erase(hlen.find(curlen));
-            hlen.insert(d - *prev(it));
-            hlen.insert(*it - d);
-            hh.insert(d);
-        }
-        vl=*prev(vlen.end());
-        hl=*prev(hlen.end());
-        res.push_back(vl*hl*1LL);
-    }
+    for (const auto& d : distance) {
+        auto& active_set = isVertical[res.size()] ? vv : hh;
+        auto& active_len = isVertical[res.size()] ? vlen : hlen;
 
-    return res;
+        auto it = active_set.upper_bound(d);
+        int next = *it;
+        int prev = *std::prev(it);
+        long curlen = next - prev;
+
+        active_len.erase(active_len.find(curlen));
+        active_len.insert(d - prev);
+        active_len.insert(next - d);
+        active_set.insert(d);
+
+        long vl = *active_len.rbegin();
+        long hl = isVertical[res.size()] ? *hlen.rbegin() : *vlen.rbegin();
+        res.push_back(vl * hl);
     }
+    return res;
+}
 
 int main()
 {
