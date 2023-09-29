@@ -1,11 +1,10 @@
 #!/bin/python3
 
-import math
 import os
-import random
-import re
-import sys
 import string
+
+
+
 
 
 P = 131
@@ -20,7 +19,7 @@ def calc_hash(pw):
     return cur_h % M
 
 def authEvents(events):
-    cur_h = None
+    
     good_hashs = None
     ans = []
     for event, value in events:
@@ -30,7 +29,7 @@ def authEvents(events):
             assert event == "authorize"
             ans.append(1 if int(value) in good_hashs else 0)
     return ans
-
+    
 
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
